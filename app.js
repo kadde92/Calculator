@@ -43,3 +43,15 @@ function operate(a, b) {
         return false;
     }
 }
+
+function operateTemp(a,b,c) {
+    if(c === '+') {
+        add(a,b)
+    } else if(c === '-') {
+        subtract(a,b)
+    } else if(c === '/') {
+        divide(a,b)
+    } else if(c === '*') {
+        multiply(a,b)
+    }
+}
