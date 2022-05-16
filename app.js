@@ -45,13 +45,41 @@ function operate(a, b) {
 }
 
 function operateTemp(a,b,c) {
-    if(c === '+') {
-        add(a,b)
-    } else if(c === '-') {
-        subtract(a,b)
-    } else if(c === '/') {
-        divide(a,b)
-    } else if(c === '*') {
-        multiply(a,b)
+    if(b === '+') {
+        add(a,c)
+    } else if(b === '-') {
+        subtract(a,c)
+    } else if(b === '/') {
+        divide(a,c)
+    } else if(b === '*') {
+        multiply(a,c)
     }
 }
+
+// add the screen for the calculator
+
+const screen = document.querySelector('.screen')
+const screenContent = document.createElement('p')
+screenContent.classList.add('screenContent')
+screen.appendChild(screenContent)
+
+
+
+
+
+// number buttons, select and add eventlistener
+
+const numBtn = document.querySelectorAll('.number-buttons')
+numBtn.forEach(number => number.addEventListener('click',insertScreen));
+
+function insertScreen(e) {
+    screenContent.textContent += e.target.textContent
+    console.log(e)
+
+}
+
+
+// operator buttons
+
+const operatorBtn = document.querySelectorAll('.operator-buttons')
+operatorBtn.forEach(operator => operator.addEventListener('click',insertScreen));
