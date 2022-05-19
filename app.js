@@ -8,25 +8,44 @@ let numTwo = null
 // 1. add
 
 function add(a, b) {
-    return a + b
+    const c = a + b
+    if (c % 1 === 0) {
+        return c
+    } else {
+        return c.toFixed(3)
+    }
 };
 
 // 2. Subtract
 function subtract(a, b) {
-    return a - b;
+    const c = a - b;
+    if (c % 1 === 0) {
+        return c
+    } else {
+        return c.toFixed(3)
+    }
 };
 
 // 3. multiply
 
 function multiply(a, b) {
-    return a * b;
+    const c = a * b
+    if (c % 1 === 0) {
+        return c
+    } else {
+        return c.toFixed(3)
+    }
 };
 
 // 4. divide
 
 function divide(a, b) {
-    return a / b;
-
+    const c = a / b
+    if (c % 1 === 0) {
+        return c
+    } else {
+        return c.toFixed(3)
+    }
 };
 
 
@@ -43,14 +62,19 @@ function divide(a, b) {
 // }
 
 function calculate(a, b, c) {
+    if (b === '/' && c === 0) {
+        alert("Cant divide with 0")
+        return clear()
+    }
+
     if (b === '+') {
         return add(a, c)
     } else if (b === '-') {
-        subtract(a, c)
+        return subtract(a, c)
     } else if (b === '/') {
-        divide(a, c)
+        return divide(a, c)
     } else if (b === '*') {
-        multiply(a, c)
+        return multiply(a, c)
     }
 }
 
@@ -61,6 +85,7 @@ const screenContent = document.createElement('div')
 screenContent.classList.add('screencontent')
 screen.appendChild(screenContent)
 
+// result screen
 const result = document.createElement('div')
 result.classList.add('result')
 screen.prepend(result)
@@ -77,22 +102,25 @@ numBtn.forEach(number => number.addEventListener('click', insertScreen));
 
 
 function insertScreen(e) {
-    screenContent.textContent += e.target.textContent;
+    if (e.target.textContent !== '=') {
+        screenContent.textContent += e.target.textContent;
+    }
 }
 
 
 // operator buttons
 
-//remove eventlistener if textContent.includes(operator buttons)
 
 const operatorBtn = document.querySelectorAll('.operator-buttons')
 operatorBtn.forEach(operator => operator.addEventListener('click', insertOperator));
 
 
 function insertOperator(e) {
-    console.log(e.key)
+
     // numOone is for saving the value of the first number
+
     numOne = parseInt(screenContent.textContent)
+
     result.textContent = screenContent.textContent + e.target.textContent
 
     screenContent.textContent = null;
@@ -100,23 +128,33 @@ function insertOperator(e) {
     // opera is a variable for saving the operator
     opera = e.target.textContent
     operatorBtn.forEach(operator => operator.removeEventListener('click', insertOperator));
+    numBtn.forEach(number => number.addEventListener('click', insertScreen));
+
+    equalBtn.addEventListener('click', addResult)
+
 
 }
 
-// remove eventlistener after one click
+
 
 
 // equal button
 
-const equalBtn = document.querySelector('.equals')
-equalBtn.addEventListener('click', addResult)
+const equalBtn = document.querySelector('#equals')
+if (screenContent.textContent !== '') {
+    equalBtn.addEventListener('click', addResult)
+}
 
-function addResult() {
+function addResult(e) {
+    equalBtn.removeEventListener('click', addResult)
     numTwo = parseInt(screenContent.textContent)
-    console.log(numOne, opera, numTwo)
-    result.textContent += screenContent.textContent
+    // console.log(numOne, opera, numTwo)
+    result.textContent += screenContent.textContent + e.target.textContent
     screenContent.textContent = calculate(numOne, opera, numTwo)
+    numBtn.forEach(number => number.removeEventListener('click', insertScreen));
 
+    operatorBtn.forEach(operator => operator.addEventListener('click', insertOperator));
+   
 }
 
 
@@ -138,6 +176,19 @@ function clear() {
 }
 
 
+// AC button 
+
+// const acBtn = document.querySelector('#ac')
+// acBtn.addEventListener('click', () => {
+//     const last = document.querySelector('.screencontent').textContent.slice(0,-1)
+//     console.log(last)
+//     screenContent.textContent -= last
+// })
 
 
-// 1. 
+
+
+
+
+
+
