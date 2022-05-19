@@ -205,3 +205,12 @@ function erase() {
 // 5. jos ei paina = niin lukuja voi muutella loputtomiin operaattorien avulla -> pitäisi korjata niin että jos num1 operaattori ja num2 on 'oikein' niin operaattorin painallus toimii samallatavalla kun =
 
 
+// dot-button
+
+const dotBtn = document.querySelector('#dot')
+dotBtn.addEventListener('click', decimal)
+
+
+function decimal(e) {
+    skip()
+}
