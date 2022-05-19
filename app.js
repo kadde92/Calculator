@@ -104,6 +104,8 @@ numBtn.forEach(number => number.addEventListener('click', insertScreen));
 function insertScreen(e) {
     if (e.target.textContent !== '=') {
         screenContent.textContent += e.target.textContent;
+        operatorBtn.forEach(operator => operator.addEventListener('click', insertOperator));
+
     }
 }
 
@@ -116,22 +118,24 @@ operatorBtn.forEach(operator => operator.addEventListener('click', insertOperato
 
 
 function insertOperator(e) {
+    if (screenContent.textContent === '') {
+        operatorBtn.forEach(operator => operator.removeEventListener('click', insertOperator));
 
-    // numOone is for saving the value of the first number
+    } else {
+        // numOone is for saving the value of the first number
+        numOne = parseInt(screenContent.textContent)
 
-    numOne = parseInt(screenContent.textContent)
+        result.textContent = screenContent.textContent + e.target.textContent
 
-    result.textContent = screenContent.textContent + e.target.textContent
+        screenContent.textContent = null;
 
-    screenContent.textContent = null;
+        // opera is a variable for saving the operator
+        opera = e.target.textContent
+        operatorBtn.forEach(operator => operator.removeEventListener('click', insertOperator));
+        numBtn.forEach(number => number.addEventListener('click', insertScreen));
 
-    // opera is a variable for saving the operator
-    opera = e.target.textContent
-    operatorBtn.forEach(operator => operator.removeEventListener('click', insertOperator));
-    numBtn.forEach(number => number.addEventListener('click', insertScreen));
-
-    equalBtn.addEventListener('click', addResult)
-
+        equalBtn.addEventListener('click', addResult)
+    }
 
 }
 
@@ -148,13 +152,17 @@ if (screenContent.textContent !== '') {
 function addResult(e) {
     equalBtn.removeEventListener('click', addResult)
     numTwo = parseInt(screenContent.textContent)
-    // console.log(numOne, opera, numTwo)
     result.textContent += screenContent.textContent + e.target.textContent
-    screenContent.textContent = calculate(numOne, opera, numTwo)
-    numBtn.forEach(number => number.removeEventListener('click', insertScreen));
-
-    operatorBtn.forEach(operator => operator.addEventListener('click', insertOperator));
-   
+    if (isNaN(numTwo)) {
+        equalBtn.removeEventListener('click', addResult)
+        const last = document.querySelector('.result').textContent.slice(0, -1)
+        result.textContent = last
+        equalBtn.addEventListener('click', addResult)
+    } else {
+        screenContent.textContent = calculate(numOne, opera, numTwo)
+        numBtn.forEach(number => number.removeEventListener('click', insertScreen));
+        operatorBtn.forEach(operator => operator.addEventListener('click', insertOperator));
+    }
 }
 
 
@@ -169,26 +177,31 @@ const clearBtn = document.querySelector('#clear')
 clearBtn.addEventListener('click', clear)
 
 function clear() {
+    numBtn.forEach(number => number.addEventListener('click', insertScreen));
     screenContent.textContent = null;
     result.textContent = null;
     operatorBtn.forEach(operator => operator.addEventListener('click', insertOperator));
-
 }
 
 
 // AC button 
 
-// const acBtn = document.querySelector('#ac')
-// acBtn.addEventListener('click', () => {
-//     const last = document.querySelector('.screencontent').textContent.slice(0,-1)
-//     console.log(last)
-//     screenContent.textContent -= last
-// })
+const acBtn = document.querySelector('#ac')
+acBtn.addEventListener('click', erase)
 
 
 
+function erase() {
+    numBtn.forEach(number => number.addEventListener('click', insertScreen));
+    const last = document.querySelector('.screencontent').textContent.slice(0, -1)
+    screenContent.textContent = last
 
+}
 
-
+// problems left: 1. starting with zero does not work as it should
+//2. '.' should only be used once per calculation
+//3. pressing between the numbers (when having i.e gap) somehow presses all the buttons...
+// 4. num + operator = NaN
+// 5. jos ei paina = niin lukuja voi muutella loputtomiin operaattorien avulla -> pitäisi korjata niin että jos num1 operaattori ja num2 on 'oikein' niin operaattorin painallus toimii samallatavalla kun =
 
 
