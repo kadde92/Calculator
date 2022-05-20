@@ -64,7 +64,7 @@ function divide(a, b) {
 function calculate(a, b, c) {
     if (b === '/' && c === 0) {
         alert("Cant divide with 0")
-        return clear()
+        return insertScreen()
     }
 
     if (b === '+') {
@@ -105,7 +105,11 @@ function insertScreen(e) {
     if (e.target.textContent !== '=') {
         screenContent.textContent += e.target.textContent;
         operatorBtn.forEach(operator => operator.addEventListener('click', insertOperator));
-
+    }
+    if(screenContent.textContent.includes('.')) {
+        document.querySelector('#dot').disabled = true
+    } else {
+        document.querySelector('#dot').disabled = false
     }
 }
 
@@ -118,15 +122,15 @@ operatorBtn.forEach(operator => operator.addEventListener('click', insertOperato
 
 
 function insertOperator(e) {
+    //can't start with an operator, will remove the operator buttons if tried
     if (screenContent.textContent === '') {
         operatorBtn.forEach(operator => operator.removeEventListener('click', insertOperator));
 
     } else {
         // numOone is for saving the value of the first number
-        numOne = parseInt(screenContent.textContent)
-
+        numOne = intOrFloat(screenContent.textContent)
+        // numOne = parseInt(screenContent.textContent)
         result.textContent = screenContent.textContent + e.target.textContent
-
         screenContent.textContent = null;
 
         // opera is a variable for saving the operator
@@ -150,8 +154,12 @@ if (screenContent.textContent !== '') {
 }
 
 function addResult(e) {
+    // first, remove the equal button from use so that the user can input it only once
     equalBtn.removeEventListener('click', addResult)
-    numTwo = parseInt(screenContent.textContent)
+
+    // add a funtion that declares the variables numOne / numTwo to either a int or a float, depending if the textContent uses the decimal or not
+    numTwo = intOrFloat(screenContent.textContent)
+    // numTwo = parseInt(screenContent.textContent)
     result.textContent += screenContent.textContent + e.target.textContent
     if (isNaN(numTwo)) {
         equalBtn.removeEventListener('click', addResult)
@@ -199,18 +207,17 @@ function erase() {
 }
 
 // problems left: 1. starting with zero does not work as it should
-//2. '.' should only be used once per calculation
+
 //3. pressing between the numbers (when having i.e gap) somehow presses all the buttons...
-// 4. num + operator = NaN
+// 4. num + operator = NaN, done
 // 5. jos ei paina = niin lukuja voi muutella loputtomiin operaattorien avulla -> pitäisi korjata niin että jos num1 operaattori ja num2 on 'oikein' niin operaattorin painallus toimii samallatavalla kun =
 
-
-// dot-button
-
-const dotBtn = document.querySelector('#dot')
-dotBtn.addEventListener('click', decimal)
-
-
-function decimal(e) {
-    skip()
+function intOrFloat(variable){
+    if(variable.includes('.')) {
+        return parseFloat(variable)
+    } else return parseInt(variable)
 }
+
+
+
+
