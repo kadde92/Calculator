@@ -217,11 +217,6 @@ function erase() {
 
 }
 
-// problems left: 1. starting with zero does not work as it should, done
-
-//3. pressing between the numbers (when having i.e gap) somehow presses all the buttons...
-// 4. num + operator = NaN, done
-// 5. jos ei paina = niin lukuja voi muutella loputtomiin operaattorien avulla -> pitäisi korjata niin että jos num1 operaattori ja num2 on 'oikein' niin operaattorin painallus toimii samallatavalla kun =
 
 function intOrFloat(variable) {
     if (variable.includes('.')) {
