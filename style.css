@@ -9,6 +9,9 @@ button {
     background-color: white;
     border: 1px solid grey;
     border-radius: 5%;
+    font-weight: 900;
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
 }
 
 
@@ -24,18 +27,33 @@ body {
 }
 
 .screen {
-    height: 55px;
+    /* display: flex; */
+    height: 30px;
     width: auto;
-    border: 3px solid black;
+    border: 2px solid black;
+    font-size: 18px;
+    text-align: right;
+    flex-grow: 2;
+    font-size: 30px;
+    padding-top: 10px;
+    padding-right: 20px;
+    border-radius: 3%;
+    
+
+    
+
+    
     /* flex-grow: 1; */
 }
 
 .container {
     width: 300px;
-    height: 400px;
-    border: 1px solid black;
+    height: 500px;
+    border: 2px solid black;
     display: flex;
     flex-direction: column;
+    border-radius: 3%;
+    /* background-color: grey; */
 }
 
 .additional-buttons {
@@ -60,6 +78,9 @@ body {
 .number-buttons button,
 .operator-buttons button {
     width: 75px;
+    background-color: #d8dbe2;
+    color: white;
+    
     
     
 }
@@ -68,6 +89,31 @@ body {
 .all-buttons {
     display: flex; 
     height: 290px; 
+    
 }
 
+
+#ac {
+    background-color: #f6cc5c;
+    color: white;
+}
+
+#clear {
+    background-color: #cf262d;
+    color: white;
+}
+
+
+.operator-buttons button:hover {
+    background-color: black;
+}
+
+#equals:hover {
+    background-color: #88d498;
+}
+
+
+.number-buttons button:hover {
+    background-color: #637081;
+}
 
